@@ -31,9 +31,9 @@ export default class MarketplaceRegistry extends Component {
   }
 
   getTestData = async () => {
-      const { accounts, grant_with_interest_income, web3 } = this.state;
+      const { accounts, marketplace_registry, web3 } = this.state;
 
-      let response_1 = await grant_with_interest_income.methods.testFunc().send({ from: accounts[0] })
+      let response_1 = await marketplace_registry.methods.testFunc().send({ from: accounts[0] })
       console.log('=== response of testFunc() function ===', response_1);
   }
 
