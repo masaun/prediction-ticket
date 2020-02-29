@@ -25,31 +25,58 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
     address clubTeam;
     address player;
     address audience;
-    address poolOfFund;
 
-    uint256 ticketPrice;
-    uint256 stakingPrice;
-    uint256 votingPoolTotalAmount;
-
+    uint256 _ticketPrice;
+    uint256 _stakingPrice;
+    uint256 _stakingPoolTotalAmount;
 
 
     constructor() public {
-        ticketPrice = 30;  // Total Ticket Price is 30
-        stakingPrice = 5;  // Staking Price for voting
+        _ticketPrice = 30;  // Total Ticket Price is 30
+        _stakingPrice = 5;  // Staking Price for voting
     }
 
     function testFunc() public returns (bool) {
         return CfConstants.CONFIRMED;
     }
     
+
+    /***
+     * @notice - Publisher is club team only 
+     * @dev - Publish ticket of today's game
+     * @param _signature - Club Team's signature
+     ***/
+    function publishTicket(address _clubTeam, bytes32 _signature) returns (uint256, uint256) {
+        address _audience = msg.sender;
+
+        // create Ticket objects
+        Ticket public ticket = Ticket({
+            ticketId: _ticketId,
+            gameId: _gameId,
+            ticketPublisher: _clubTeam,
+            signature: _signature,
+            ticketPrice: _ticketPrice,
+            stakingPrice: _stakingPrice,
+            //ticketOwner: null
+            //predictPlayer: null
+        });
+
+        return (ticketId, gameId);
+    }
+    
+
+
+
     /***
      * @dev - Buy ticket
      ***/
     function buyTicket(
         address _clubTeam, 
-        address _player, 
-        address _audience
+        address _player     // Predicted player who is selected by audience
     ) public returns (bool) {
+        // This function is called by audience
+        address _audience = msg.sender;
+
         // #1 Buy ticket
         erc20.transferFrom(_audience, _clubTeam, ticketPrice);
 
@@ -61,11 +88,12 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
     /***
      * @dev - Audience predict MVP player
      ***/
-    function predictMVPPlayer(
+    function predictPlayerOfMVP(
         address _player,
         address _audience,
     ) public returns (bool) {
         // In progress
+        
     }
     
 
