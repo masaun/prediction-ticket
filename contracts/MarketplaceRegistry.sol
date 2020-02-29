@@ -2,14 +2,13 @@ pragma solidity ^0.5.10;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+
+import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/ownership/Ownable.sol";
 
 // Storage
 import "./storage/CfStorage.sol";
 import "./storage/CfConstants.sol";
-
-
-import "./.sol";
 
 
 
@@ -20,6 +19,10 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
 
     IERC20 public erc20;
     IERC721 public erc721;
+
+    // @dev - Global id
+    address ticketId;
+    address gameId;
 
     // @dev - WalletAddress (after I replace)
     address clubTeam;
@@ -42,6 +45,15 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
     }
     
 
+    function playersRegistry(address _playerAddress) public returns (bool) {
+        PlayersAddressList storage playersAddresses = PlayersAddressList({
+            playerAddress: _playerAddress
+        });
+        playersAddresses.push(_playerAddress);
+    }
+    
+
+
     /***
      * @notice - Publisher is club team only 
      * @dev - Publish ticket of today's game
@@ -49,6 +61,9 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
      ***/
     function publishTicket(address _clubTeam, bytes32 _signature) returns (uint256, uint256) {
         address _audience = msg.sender;
+
+        // Set current ticketId
+
 
         // create Ticket objects
         Ticket public ticket = Ticket({
@@ -63,9 +78,11 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
         });
 
         return (ticketId, gameId);
+
+        // Next count of tokenId
+        ticketId.add(1);
     }
     
-
 
 
     /***
@@ -93,7 +110,7 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
         // This function is called by audience
         address _audience = msg.sender;
 
-        playersList memory player = playersLists[_gameId][_playerAddress];
+        playersList memory player = players[_gameId][_playerAddress];
         player.votedCount = player.votedCount + 1;
     }
 
@@ -103,13 +120,21 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
      * @notice - Judgment time is 5 hours later from start time of the game. 
      * @dev - MVP is choosen. 
      ***/
-    function judgementPlayerOfMVP(uint256 _ticketId) public returns (bool) {
+    function judgementPlayerOfMVP(uint256 _ticketId, uint256 _gameId, address _playerOfMVPAddress) public returns (bool) {
+        address playerOfMVP;
+
         uint256 currentTime;
         Ticket memory ticket = tickets[_ticketId];
         currentTime = now;
 
         if (currentTime > ticket.startTimeOfGame + 5 hours) {
-            // #1 Identify a player who collect the most number of vote.
+            // #1 Identify a player who collect the most number of vote in the game.
+            for (uint i=0; i < playersAddresses.length; i++) {
+                PlayersAddressList public playersAddress = playersAddresses[i]
+
+                PlayersList memory player = players[_gameId][_playerAddress];
+        
+            }
 
             // #2 Identify audiences who was successful to predict MVP.
         }
@@ -118,13 +143,21 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
 
 
     /***
-     * @dev - Kickback（Distribute）for audience who is winner of prediction and player who is choosen as MVP of the game.
+     * @dev - Reward（Distribute）for audience who is winner of prediction and player who is choosen as MVP of the game.
      ***/
-    function kickbackForWinnerAndPlayer() public returns (bool) {
-        // #1 Kickback money from pool for audience of winner
+    function sendRewardForWinnerAndPlayer(address poolOfFund, address _audience, address _player) public returns (bool) {
+        uint256 winnerAudiences;             // Number of winners
+        address playerOfMVP;
+        uint256 distrubuteRewardForWinners;  // per 1 winner.
 
-        // #2 Kickback money as "tip" from pool for player who is choosen as MVP
+        // #1 - Calculate reward 
+        distrubuteRewardForWinners = poolOfFund.div(winnerAudiences + 1);  // +1 is playerOfMVP
 
+        // #2 - Send reward money from pool for audience of winner
+        erc20.transferFrom(poolOfFund, _audience, ticketPrice);
+
+        // #3 - Send reward money as "tip" from pool for player who is choosen as MVP
+        erc20.transferFrom(poolOfFund, _player, ticketPrice);
     }
     
 

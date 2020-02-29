@@ -9,6 +9,11 @@ contract CfObjects {
         uint256 votedCount;
     }
 
+    struct PlayersAddressList {
+        address playerAddress;
+    }
+    
+
     struct Ticket {
         uint256 gameId;
         uint256 ticketId;
