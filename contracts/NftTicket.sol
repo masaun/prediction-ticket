@@ -14,7 +14,14 @@ contract NftTicket is TradeableERC721Token {
     address proxyRegistryAddress;
     uint256 private _currentTokenId = 0;
 
-    constructor(address _proxyRegistryAddress) TradeableERC721Token("Ticket for watching sports", "TKT", _proxyRegistryAddress) public {  }
+    constructor(
+        address _proxyRegistryAddress
+    ) 
+        TradeableERC721Token("Ticket for watching sports", "TKT", _proxyRegistryAddress) 
+        public 
+    {
+        // Nothing   
+    }
 
     function baseTokenURI() public view returns (string memory) {
         return "https://opensea-creatures-api.herokuapp.com/api/nft-ticket/";
@@ -25,10 +32,10 @@ contract NftTicket is TradeableERC721Token {
      * @dev Mints a token to an address with a tokenURI.
      * @param _to address of the future owner of the token => Club Team
      */
-    function mintTo(address _to) public onlyOwner {
+    function mintTo(address _to) public {
         uint256 newTokenId = _getNextTokenId();
-        _mint(msg.sender, newTokenId);
-        //_mint(_to, newTokenId);
+        //_mint(msg.sender, newTokenId);
+        _mint(_to, newTokenId);
         _incrementTokenId();
     }
 
