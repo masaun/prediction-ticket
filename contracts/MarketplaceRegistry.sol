@@ -25,6 +25,7 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
     address clubTeam;
     address player;
     address audience;
+    address poolOfFund;
 
     uint256 _ticketPrice;
     uint256 _stakingPrice;
@@ -98,12 +99,26 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
 
 
     /***
+     * @dev - MVP is choosen. Criteria which choose MVP is the most number of vote
+     ***/
+    function judgementPlayerOfMVP() public returns (bool) {
+        // #1 Identify a player who collect the most number of vote.
+
+        // #2 Identify audiences who was successful to predict MVP.
+
+    }
+    
+
+
+    /***
      * @dev - Kickback（Distribute）for audience who is winner of prediction and player who is choosen as MVP of the game.
      ***/
-    function kickbackForWinnerAndPlayer() returns(bool res) internal {
+    function kickbackForWinnerAndPlayer() public returns (bool) {
         // #1 Kickback money from pool for audience of winner
 
+
         // #2 Kickback money as "tip" from pool for player who is choosen as MVP
+
     }
     
 
