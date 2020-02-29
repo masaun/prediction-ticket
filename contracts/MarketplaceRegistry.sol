@@ -34,6 +34,10 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
     uint256 _stakingPrice;
     uint256 _stakingPoolTotalAmount;
 
+    // @dev - sendReward
+    address[] winnerAudiences;
+    address[] playersOfMVP;
+
 
     constructor() public {
         _ticketPrice = 30;  // Total Ticket Price is 30
@@ -121,7 +125,6 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
      * @dev - MVP is choosen. 
      ***/
     function judgementPlayerOfMVP(uint256 _ticketId, uint256 _gameId, address _playerOfMVPAddress) public returns (bool) {
-        address playerOfMVP;
 
         uint256 currentTime;
         Ticket memory ticket = tickets[_ticketId];
@@ -137,6 +140,7 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
             }
 
             // #2 Identify audiences who was successful to predict MVP.
+
         }
     }
     
@@ -145,21 +149,22 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
     /***
      * @dev - Reward（Distribute）for audience who is winner of prediction and player who is choosen as MVP of the game.
      ***/
-    function sendRewardForWinnerAndPlayer(address poolOfFund, address _audience, address _player) public returns (bool) {
-        uint256 winnerAudiences;             // Number of winners
-        address playerOfMVP;
+    function sendRewardForWinnerAndPlayer(address poolOfFund, uint256 gameId) public returns (bool) {
         uint256 distrubuteRewardForWinners;  // per 1 winner.
 
         // #1 - Calculate reward 
         distrubuteRewardForWinners = poolOfFund.div(winnerAudiences + 1);  // +1 is playerOfMVP
 
         // #2 - Send reward money from pool for audience of winner
-        erc20.transferFrom(poolOfFund, _audience, ticketPrice);
+        for (i=0; i<winnerAudiences.length; i++) {
+            erc20.transferFrom(poolOfFund, winnerAudiences[i], distrubuteRewardForWinners);
+        }
 
         // #3 - Send reward money as "tip" from pool for player who is choosen as MVP
-        erc20.transferFrom(poolOfFund, _player, ticketPrice);
+        for (p=0; p<playersOfMVP.length; p++) {
+            erc20.transferFrom(poolOfFund, playersOfMVP[p], distrubuteRewardForWinners);
+        }
     }
-    
 
 
 }
