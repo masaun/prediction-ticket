@@ -209,7 +209,7 @@ export default class MarketplaceRegistry extends Component {
 
               <Button size={'small'} mt={3} mb={2} onClick={this.getTestData}> Get TestData </Button> <br />
 
-              <Button size={'small'} mt={3} mb={2} onClick={this.mintTo}> Mint To </Button> <br />
+              <Button size={'small'} mt={3} mb={2} onClick={this.mintTo}> Publish NFT Ticket（Mint To） </Button> <br />
 
               <Button size={'small'} mt={3} mb={2} onClick={this.tokenURI}> Token URI </Button> <br />
 
