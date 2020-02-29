@@ -16,13 +16,14 @@ import "./storage/CfConstants.sol";
  * @notice - This contract is that ...
  **/
 contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
+    using SafeMath for uint;
 
     IERC20 public erc20;
     IERC721 public erc721;
 
     // @dev - Global id
-    address ticketId;
-    address gameId;
+    uint256 ticketId;
+    uint256 gameId;
 
     // @dev - WalletAddress (after I replace)
     address clubTeam;
@@ -70,22 +71,21 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
 
 
         // create Ticket objects
-        Ticket storage ticket = Ticket({
-            ticketId: _ticketId,
-            gameId: _gameId,
-            ticketPublisher: _clubTeam,
-            signature: _signature,
-            ticketPrice: _ticketPrice,
-            stakingPrice: _stakingPrice,
-            startTimeOfGame: now,
-            ticketOwner: 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE,
-            predictPlayer: 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE
-        });
+        Ticket storage ticket = tickets[ticketId];
+        ticket.ticketId = _ticketId;
+        ticket.gameId = _gameId;
+        ticket.ticketPublisher = _clubTeam;
+        ticket.signature = _signature;
+        ticket.ticketPrice = _ticketPrice;
+        ticket.stakingPrice = _stakingPrice;
+        ticket.startTimeOfGame = now;
+        ticket.ticketOwner = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
+        ticket.predictPlayer = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
 
-        return (ticketId, gameId);
-
-        // Next count of tokenId
+        // Next count of ticketId
         ticketId.add(1);
+
+        return (_ticketId, _gameId);
     }
     
 
@@ -157,7 +157,7 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
         uint256 distrubuteRewardForWinners;  // per 1 winner.
 
         // #1 - Calculate reward 
-        distrubuteRewardForWinners = poolOfFund.div(winnerAudiences + 1);  // +1 is playerOfMVP
+        distrubuteRewardForWinners = _stakingPoolTotalAmount.div((winnerAudiences.length).add(1));  // +1 is playerOfMVP
 
         // #2 - Send reward money from pool for audience of winner
         for (uint i=0; i<winnerAudiences.length; i++) {
