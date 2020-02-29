@@ -70,13 +70,13 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
 
 
         // create Ticket objects
-        Ticket public ticket = Ticket({
+        Ticket storage ticket = Ticket({
             ticketId: _ticketId,
             gameId: _gameId,
             ticketPublisher: _clubTeam,
             signature: _signature,
             ticketPrice: _ticketPrice,
-            stakingPrice: _stakingPrice,
+            stakingPrice: _stakingPrice
             //ticketOwner: null
             //predictPlayer: null
         });
