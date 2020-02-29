@@ -10,6 +10,8 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
 import "./storage/CfStorage.sol";
 import "./storage/CfConstants.sol";
 
+import "./NftTicket.sol";
+
 
 
 /***
@@ -20,6 +22,8 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
 
     IERC20 public erc20;
     IERC721 public erc721;
+
+    NftTicket public nftTicket;
 
     // @dev - Global id
     uint256 ticketId;
@@ -40,7 +44,9 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
     address[] playersOfMVP;
 
 
-    constructor() public {
+    constructor(address _nftTicket) public {
+        nftTicket = NftTicket(_nftTicket);
+
         _ticketPrice = 30;  // Total Ticket Price is 30
         _stakingPrice = 5;  // Staking Price for voting
     }
@@ -68,7 +74,7 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
         address _audience = msg.sender;
 
         // Set current ticketId
-
+        nftTicket.mintTo(_clubTeam);
 
         // create Ticket objects
         Ticket storage ticket = tickets[ticketId];
