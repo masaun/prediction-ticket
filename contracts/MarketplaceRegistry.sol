@@ -99,13 +99,20 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
 
 
     /***
-     * @dev - MVP is choosen. Criteria which choose MVP is the most number of vote
+     * @notice - Criteria which choose MVP is the most number of vote
+     * @notice - Judgment time is 5 hours later from start time of the game. 
+     * @dev - MVP is choosen. 
      ***/
-    function judgementPlayerOfMVP() public returns (bool) {
-        // #1 Identify a player who collect the most number of vote.
+    function judgementPlayerOfMVP(uint256 _ticketId) public returns (bool) {
+        uint256 currentTime;
+        Ticket memory ticket = tickets[_ticketId];
+        currentTime = now;
 
-        // #2 Identify audiences who was successful to predict MVP.
+        if (currentTime > ticket.startTimeOfGame + 5 hours) {
+            // #1 Identify a player who collect the most number of vote.
 
+            // #2 Identify audiences who was successful to predict MVP.
+        }
     }
     
 
@@ -115,7 +122,6 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
      ***/
     function kickbackForWinnerAndPlayer() public returns (bool) {
         // #1 Kickback money from pool for audience of winner
-
 
         // #2 Kickback money as "tip" from pool for player who is choosen as MVP
 

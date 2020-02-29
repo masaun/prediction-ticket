@@ -17,6 +17,7 @@ contract CfObjects {
         uint ticketPrice;    // Total Ticket Price is 30
         uint stakingPrice;   // Staking Price for voting
 
+        uint startTimeOfGame;
         address ticketOwner;
         address predictPlayer;
     }
