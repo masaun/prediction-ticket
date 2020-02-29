@@ -78,7 +78,7 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
         ticket.signature = _signature;
         ticket.ticketPrice = _ticketPrice;
         ticket.stakingPrice = _stakingPrice;
-        ticket.startTimeOfGame = now;
+        ticket.startTimeOfGame = now;  // So far
         ticket.ticketOwner = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
         ticket.predictPlayer = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
 

@@ -15,8 +15,8 @@ contract NftTicket is TradeableERC721Token {
     }
 
 
-    function mintTo() public returns (bool) {
-        // In progress
+    function _mintTo(address _to) public onlyOwner {
+        mintTo(_to);
     }
     
 }
