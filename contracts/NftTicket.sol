@@ -13,4 +13,10 @@ contract NftTicket is TradeableERC721Token {
     function baseTokenURI() public view returns (string memory) {
         return "https://opensea-creatures-api.herokuapp.com/api/nft-ticket/";
     }
+
+
+    function mintTo() public returns (bool) {
+        // In progress
+    }
+    
 }
