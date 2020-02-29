@@ -88,12 +88,12 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
     /***
      * @dev - Audience predict MVP player
      ***/
-    function predictPlayerOfMVP(
-        address _player,
-        address _audience,
-    ) public returns (bool) {
-        // In progress
-        
+    function predictPlayerOfMVP(uint256 _gameId, address _playerAddress) public returns (bool) {
+        // This function is called by audience
+        address _audience = msg.sender;
+
+        playersList memory player = playersLists[_gameId][_playerAddress];
+        player.votedCount = player.votedCount + 1;
     }
     
 
@@ -101,6 +101,14 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
 }
 
 
+
+
+
+
+
+///////////////////////////////
+/// Reference below
+//////////////////////////////
 
 
 /**

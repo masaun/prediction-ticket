@@ -7,7 +7,9 @@ import "./CfEvents.sol";
 // shared storage
 contract CfStorage is CfObjects, CfEvents {
 
-    mapping (uint => ExampleObject) examples;
+    mapping (uint256 => mapping (address => PlayersList)) playersLists;
+
+    mapping (uint256 => Ticket) tickets;
 
 }
 
