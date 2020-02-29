@@ -15,6 +15,10 @@ contract NftTicket is TradeableERC721Token {
     }
 
 
+    /**
+     * @dev Mints a token to an address with a tokenURI.
+     * @param _to address of the future owner of the token => Club Team
+     */
     function _mintTo(address _to) public onlyOwner {
         mintTo(_to);
     }

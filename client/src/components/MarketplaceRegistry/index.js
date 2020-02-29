@@ -14,7 +14,6 @@ import styles from '../../App.module.scss';
 
 
 
-
 export default class MarketplaceRegistry extends Component {
   constructor(props) {    
     super(props);
@@ -28,22 +27,34 @@ export default class MarketplaceRegistry extends Component {
     };
 
     this.getTestData = this.getTestData.bind(this);
+    this.mintTo = this.mintTo.bind(this);
   }
 
   getTestData = async () => {
       const { accounts, marketplace_registry, web3 } = this.state;
 
-      let response_1 = await marketplace_registry.methods.testFunc().send({ from: accounts[0] })
-      console.log('=== response of testFunc() function ===', response_1);
+      let response = await marketplace_registry.methods.testFunc().send({ from: accounts[0] })
+      console.log('=== response of testFunc() function ===', response);
+  }
+
+  mintTo = async () => {
+      const { accounts, nft_ticket, web3 } = this.state;
+      const _clubTeam = accounts[1] 
+
+      let response = await nft_ticket.methods._mintTo(_clubTeam).send({ from: accounts[0] });
+      console.log('=== response of _mintTo() function ===', response);
   }
 
 
   //////////////////////////////////// 
   ///// Refresh Values
   ////////////////////////////////////
-  refreshValues = (instanceMarketplaceRegistry) => {
+  refreshValues = (instanceMarketplaceRegistry, instanceNftTicket) => {
     if (instanceMarketplaceRegistry) {
       console.log('refreshValues of instanceMarketplaceRegistry');
+    }
+    if (instanceNftTicket) {
+      console.log('refreshValues of instanceNftTicket');
     }
   }
 
@@ -65,8 +76,11 @@ export default class MarketplaceRegistry extends Component {
     const hotLoaderDisabled = zeppelinSolidityHotLoaderOptions.disabled;
  
     let MarketplaceRegistry = {};
+    let NftTicket = {};
     try {
-      MarketplaceRegistry = require("../../../../build/contracts/MarketplaceRegistry.json");          // Load artifact-file of MarketplaceRegistry
+      MarketplaceRegistry = require("../../../../build/contracts/MarketplaceRegistry.json");  // Load artifact-file of MarketplaceRegistry
+      NftTicket = require("../../../../build/contracts/NftTicket.json");
+
     } catch (e) {
       console.log(e);
     }
@@ -94,6 +108,7 @@ export default class MarketplaceRegistry extends Component {
         balance = web3.utils.fromWei(balance, 'ether');
 
         let instanceMarketplaceRegistry = null;
+        let instanceNftTicket = null;
         let deployedNetwork = null;
 
         // Create instance of contracts
@@ -108,7 +123,18 @@ export default class MarketplaceRegistry extends Component {
           }
         }
 
-        if (MarketplaceRegistry) {
+        if (NftTicket.networks) {
+          deployedNetwork = NftTicket.networks[networkId.toString()];
+          if (deployedNetwork) {
+            instanceNftTicket = new web3.eth.Contract(
+              NftTicket.abi,
+              deployedNetwork && deployedNetwork.address,
+            );
+            console.log('=== instanceNftTicket ===', instanceNftTicket);
+          }
+        }
+
+        if (MarketplaceRegistry, NftTicket) {
           // Set web3, accounts, and contract to the state, and then proceed with an
           // example of interacting with the contract's methods.
           this.setState({ 
@@ -120,13 +146,14 @@ export default class MarketplaceRegistry extends Component {
             networkType, 
             hotLoaderDisabled,
             isMetaMask, 
-            marketplace_registry: instanceMarketplaceRegistry
+            marketplace_registry: instanceMarketplaceRegistry,
+            nft_ticket: NftTicket
           }, () => {
             this.refreshValues(
               instanceMarketplaceRegistry
             );
             setInterval(() => {
-              this.refreshValues(instanceMarketplaceRegistry);
+              this.refreshValues(instanceMarketplaceRegistry, instanceNftTicket);
             }, 5000);
           });
         }
@@ -171,6 +198,8 @@ export default class MarketplaceRegistry extends Component {
               />
 
               <Button size={'small'} mt={3} mb={2} onClick={this.getTestData}> Get TestData </Button> <br />
+
+              <Button size={'small'} mt={3} mb={2} onClick={this.mintTo}> Mint To </Button> <br />
 
             </Card>
           </Grid>
