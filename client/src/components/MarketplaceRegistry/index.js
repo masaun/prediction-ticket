@@ -39,9 +39,9 @@ export default class MarketplaceRegistry extends Component {
 
   mintTo = async () => {
       const { accounts, nft_ticket, web3 } = this.state;
-      const _clubTeam = accounts[1] 
+      //const _clubTeam = '0x718E3ea0B8C2911C5e54Cb4b9B2075fdd87B55a7'
 
-      let response = await nft_ticket.methods._mintTo(_clubTeam).send({ from: accounts[0] });
+      let response = await nft_ticket.methods._mintTo().send({ from: accounts[0] });
       console.log('=== response of _mintTo() function ===', response);
   }
 
@@ -147,7 +147,7 @@ export default class MarketplaceRegistry extends Component {
             hotLoaderDisabled,
             isMetaMask, 
             marketplace_registry: instanceMarketplaceRegistry,
-            nft_ticket: NftTicket
+            nft_ticket: instanceNftTicket
           }, () => {
             this.refreshValues(
               instanceMarketplaceRegistry
