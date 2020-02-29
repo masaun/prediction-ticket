@@ -95,6 +95,16 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
         playersList memory player = playersLists[_gameId][_playerAddress];
         player.votedCount = player.votedCount + 1;
     }
+
+
+    /***
+     * @dev - Kickback（Distribute）for audience who is winner of prediction and player who is choosen as MVP of the game.
+     ***/
+    function kickbackForWinnerAndPlayer() returns(bool res) internal {
+        // #1 Kickback money from pool for audience of winner
+
+        // #2 Kickback money as "tip" from pool for player who is choosen as MVP
+    }
     
 
 
