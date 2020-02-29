@@ -14,7 +14,7 @@ import "./storage/CfConstants.sol";
 
 /***
  * @notice - This contract is that ...
- */
+ **/
 contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
 
     IERC20 public erc20;
@@ -104,13 +104,16 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
 
         // #2 ClubTeam staking instead of audience
         erc20.transferFrom(_clubTeam, poolOfFund, stakingPrice);
+
+        // #3 Audience predict MVP player
+        predictPlayerOfMVP(uint256 _gameId, address _playerAddress)
     }
 
 
     /***
      * @dev - Audience predict MVP player
      ***/
-    function predictPlayerOfMVP(uint256 _gameId, address _playerAddress) public returns (bool) {
+    function predictPlayerOfMVP(uint256 _gameId, address _playerAddress) internal returns (bool) {
         // This function is called by audience
         address _audience = msg.sender;
 
@@ -168,6 +171,10 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
 
 
 }
+
+
+
+
 
 
 
