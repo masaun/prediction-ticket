@@ -28,6 +28,7 @@ export default class MarketplaceRegistry extends Component {
 
     this.getTestData = this.getTestData.bind(this);
     this.mintTo = this.mintTo.bind(this);
+    this.tokenURI = this.tokenURI.bind(this);
   }
 
   getTestData = async () => {
@@ -39,11 +40,20 @@ export default class MarketplaceRegistry extends Component {
 
   mintTo = async () => {
       const { accounts, nft_ticket, web3 } = this.state;
-      //const _clubTeam = '0x718E3ea0B8C2911C5e54Cb4b9B2075fdd87B55a7'
+      const _clubTeam = '0x718E3ea0B8C2911C5e54Cb4b9B2075fdd87B55a7'
 
-      let response = await nft_ticket.methods._mintTo().send({ from: accounts[0] });
+      let response = await nft_ticket.methods.mintTo(_clubTeam).send({ from: accounts[0] });
       console.log('=== response of _mintTo() function ===', response);
   }
+
+  tokenURI = async () => {
+      const { accounts, nft_ticket, web3 } = this.state;
+      const _tokenId = 0
+
+      let response = await nft_ticket.methods.tokenURI(_tokenId).call();
+      console.log('=== response of tokenURI() function ===', response);
+  }
+
 
 
   //////////////////////////////////// 
@@ -200,6 +210,8 @@ export default class MarketplaceRegistry extends Component {
               <Button size={'small'} mt={3} mb={2} onClick={this.getTestData}> Get TestData </Button> <br />
 
               <Button size={'small'} mt={3} mb={2} onClick={this.mintTo}> Mint To </Button> <br />
+
+              <Button size={'small'} mt={3} mb={2} onClick={this.tokenURI}> Token URI </Button> <br />
 
             </Card>
           </Grid>
