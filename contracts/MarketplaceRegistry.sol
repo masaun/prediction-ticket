@@ -106,7 +106,7 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
         erc20.transferFrom(_clubTeam, poolOfFund, stakingPrice);
 
         // #3 Audience predict MVP player
-        predictPlayerOfMVP(uint256 _gameId, address _playerAddress)
+        predictPlayerOfMVP(_gameId, _playerAddress)
     }
 
 
@@ -117,6 +117,7 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
         // This function is called by audience
         address _audience = msg.sender;
 
+        // #3 Audience predict MVP player
         playersList memory player = players[_gameId][_playerAddress];
         player.votedCount = player.votedCount + 1;
     }
