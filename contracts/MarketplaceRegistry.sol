@@ -1,14 +1,18 @@
 pragma solidity ^0.5.10;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
+import "openzeppelin-solidity/contracts/token/ERC721/IERC721.sol";
 
-import "@openzeppelin/contracts/math/SafeMath.sol";
-import "@openzeppelin/contracts/ownership/Ownable.sol";
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 // Storage
 import "./storage/CfStorage.sol";
 import "./storage/CfConstants.sol";
+
+import "./NftTicket.sol";
+import "./StakingByAToken.sol";
+import "./SendRewardForWinners.sol";
 
 
 
@@ -20,6 +24,10 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
 
     IERC20 public erc20;
     IERC721 public erc721;
+
+    NftTicket public nftTicket;
+    StakingByAToken public stakingByAToken;
+    SendRewardForWinners public sendRewardForWinners;
 
     // @dev - Global id
     uint256 ticketId;
@@ -40,7 +48,11 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
     address[] playersOfMVP;
 
 
-    constructor() public {
+    constructor(address _nftTicket, address _stakingByAToken, address _sendRewardForWinners) public {
+        nftTicket = NftTicket(_nftTicket);
+        stakingByAToken = StakingByAToken(_stakingByAToken);
+        sendRewardForWinners = SendRewardForWinners(_sendRewardForWinners);
+
         _ticketPrice = 30;  // Total Ticket Price is 30
         _stakingPrice = 5;  // Staking Price for voting
     }
@@ -68,19 +80,20 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
         address _audience = msg.sender;
 
         // Set current ticketId
-
+        nftTicket.mintTo(_clubTeam);
 
         // create Ticket objects
         Ticket storage ticket = tickets[ticketId];
+        //ticket.ticketId = nftTicket._currentTokenId;  // Call from NftTicket.sol
         ticket.ticketId = _ticketId;
         ticket.gameId = _gameId;
         ticket.ticketPublisher = _clubTeam;
         ticket.signature = _signature;
         ticket.ticketPrice = _ticketPrice;
         ticket.stakingPrice = _stakingPrice;
-        ticket.startTimeOfGame = now;  // So far
-        ticket.ticketOwner = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
-        ticket.predictPlayer = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
+        ticket.startTimeOfGame = now;  // So far. Actually, it set starting time to be exact.
+        ticket.ticketOwner = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;    // So far.
+        ticket.predictPlayer = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;  // So far.
 
         // Next count of ticketId
         ticketId.add(1);
@@ -106,6 +119,8 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
 
         // #2 ClubTeam staking instead of audience
         erc20.transferFrom(_clubTeam, poolOfFund, _stakingPrice);
+
+        stakingByAToken.depositToLendingPool();
 
         // #3 Audience predict MVP player
         predictPlayerOfMVP(_gameId, _player);
@@ -156,15 +171,18 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
     function sendRewardForWinnerAndPlayer(address poolOfFund, uint256 gameId) public returns (bool) {
         uint256 distrubuteRewardForWinners;  // per 1 winner.
 
-        // #1 - Calculate reward 
+        // #1 - Redeem AToken which are used for staking with ERC20 token.
+        sendRewardForWinners.redeemFromATokenToERC20();
+
+        // #2 - Calculate number of people who are winner and has rights to getting reward 
         distrubuteRewardForWinners = _stakingPoolTotalAmount.div((winnerAudiences.length).add(1));  // +1 is playerOfMVP
 
-        // #2 - Send reward money from pool for audience of winner
+        // #3 - Send reward money from pool for audience of winner
         for (uint i=0; i<winnerAudiences.length; i++) {
             erc20.transferFrom(poolOfFund, winnerAudiences[i], distrubuteRewardForWinners);
         }
 
-        // #3 - Send reward money as "tip" from pool for player who is choosen as MVP
+        // #4 - Send reward money as "tip" from pool for player who is choosen as MVP
         for (uint p=0; p<playersOfMVP.length; p++) {
             erc20.transferFrom(poolOfFund, playersOfMVP[p], distrubuteRewardForWinners);
         }
