@@ -78,7 +78,8 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
 
         // create Ticket objects
         Ticket storage ticket = tickets[ticketId];
-        ticket.ticketId = _ticketId;
+        ticket.ticketId = nftTicket._currentTokenId;  // Call from NftTicket.sol
+        //ticket.ticketId = _ticketId;
         ticket.gameId = _gameId;
         ticket.ticketPublisher = _clubTeam;
         ticket.signature = _signature;
