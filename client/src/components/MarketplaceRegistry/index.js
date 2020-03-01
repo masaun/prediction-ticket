@@ -54,7 +54,15 @@ export default class MarketplaceRegistry extends Component {
       console.log('=== response of tokenURI() function ===', response);
   }
 
+  buyTicket = async () => {
+      const { accounts, marketplace_registry, web3 } = this.state;
+      const _gameId = 1
+      const _clubTeam = '0x8Fc9d07b1B9542A71C4ba1702Cd230E160af6EB3'
+      const _player = '0x0fED8b3f1024f6577E563c29CB8B8829EE2b87ef'
 
+      let response = await marketplace_registry.methods.buyTicket(_gameId, _clubTeam, _player).send({ from: accounts[0] })
+      console.log('=== response of buyTicket() function ===', response);
+  }
 
   //////////////////////////////////// 
   ///// Refresh Values
@@ -212,6 +220,8 @@ export default class MarketplaceRegistry extends Component {
               <Button size={'small'} mt={3} mb={2} onClick={this.mintTo}> Publish NFT Ticket（Mint To） </Button> <br />
 
               <Button size={'small'} mt={3} mb={2} onClick={this.tokenURI}> Token URI </Button> <br />
+
+              <Button size={'small'} mt={3} mb={2} onClick={this.buyTicket}> Buy Ticket </Button> <br />
 
             </Card>
           </Grid>

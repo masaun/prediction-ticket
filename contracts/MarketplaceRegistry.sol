@@ -116,7 +116,7 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
         // #2 ClubTeam staking instead of audience
         erc20.transferFrom(_clubTeam, poolOfFund, _stakingPrice);
 
-        stakingByAToken.depositToLendingPool();        
+        stakingByAToken.depositToLendingPool();
 
         // #3 Audience predict MVP player
         predictPlayerOfMVP(_gameId, _player);
@@ -167,7 +167,7 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
     function sendRewardForWinnerAndPlayer(address poolOfFund, uint256 gameId) public returns (bool) {
         uint256 distrubuteRewardForWinners;  // per 1 winner.
 
-        // #1 - Calculate reward 
+        // #1 - Calculate number of people who are winner and has rights to getting reward 
         distrubuteRewardForWinners = _stakingPoolTotalAmount.div((winnerAudiences.length).add(1));  // +1 is playerOfMVP
 
         // #2 - Send reward money from pool for audience of winner
