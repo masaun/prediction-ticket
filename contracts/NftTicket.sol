@@ -1,7 +1,7 @@
 pragma solidity ^0.5.10;
 
 import "./opensea/TradeableERC721Token.sol";
-import "@openzeppelin/contracts/ownership/Ownable.sol";
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 /**
  * @title NftTicket

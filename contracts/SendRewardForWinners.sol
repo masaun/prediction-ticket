@@ -2,12 +2,12 @@
 
 pragma solidity ^0.5.0;
 
-import "@openzeppelin/contracts/math/SafeMath.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol";
 
 // AAVE
-import "./aave/tokenization/AToken.sol.sol";
+import "./aave/tokenization/AToken.sol";
 import "./aave/EthAddressLib.sol";
 
 
@@ -28,7 +28,7 @@ contract SendRewardForWinners {
 
     function redeemFromATokenToERC20() public returns (bool) {
         /// Input variables
-        uint256 amount = 1000 * 1e18;
+        uint256 amount = 100 * 1e18;
 
         /// redeem method call
         aTokenInstance.redeem(amount);
