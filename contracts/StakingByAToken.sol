@@ -16,11 +16,6 @@ contract StakingByAToken {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 
-    /// Input variables
-    address daiAddress = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
-    uint256 amount = 100 * 1e18;
-    uint16 referral = 0;
-
     /// Retrieve LendingPool address
     ILendingPoolAddressesProvider public provider;
     ILendingPool public lendingPool;
@@ -33,9 +28,13 @@ contract StakingByAToken {
         lendingPool = ILendingPool(provider.getLendingPool());
     }
 
-
     /// Deposit method call
     function depositToLendingPool() public returns (bool) {
+        /// Input variables（For test）
+        address daiAddress = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
+        uint256 amount = 100 * 1e18;
+        uint16 referral = 0;
+
         lendingPool.deposit(daiAddress, amount, referral);        
     }
 
