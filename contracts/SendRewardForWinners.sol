@@ -8,7 +8,7 @@ import "openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol";
 
 // AAVE
 import "./aave/tokenization/AToken.sol";
-import "./aave/EthAddressLib.sol";
+import "./aave/libraries/EthAddressLib.sol";
 
 
 contract SendRewardForWinners {

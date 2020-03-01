@@ -9,7 +9,7 @@ import "openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol";
 // AAVE
 import "./aave/ILendingPoolAddressesProvider.sol";
 import "./aave/ILendingPool.sol";
-import "./aave/EthAddressLib.sol";
+import "./aave/libraries/EthAddressLib.sol";
 
 contract StakingByAToken {
 
