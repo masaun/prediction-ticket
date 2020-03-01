@@ -88,8 +88,8 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
         ticket.ticketPrice = _ticketPrice;
         ticket.stakingPrice = _stakingPrice;
         ticket.startTimeOfGame = now;  // So far. Actually, it set starting time to be exact.
-        ticket.ticketOwner = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
-        ticket.predictPlayer = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
+        ticket.ticketOwner = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;    // So far.
+        ticket.predictPlayer = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;  // So far.
 
         // Next count of ticketId
         ticketId.add(1);

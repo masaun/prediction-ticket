@@ -7,5 +7,5 @@ var StakingByAToken = artifacts.require("StakingByAToken");
 const _stakingByAToken = StakingByAToken.address;
 
 module.exports = function(deployer) {
-    deployer.deploy(MarketplaceRegistry, _nftTicke, _stakingByAToken);
+    deployer.deploy(MarketplaceRegistry, _nftTicket, _stakingByAToken);
 };
