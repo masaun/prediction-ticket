@@ -1,7 +1,7 @@
-# Prediction Ticket（For Professional Sports）
+# Prediction Ticket（for professional sports game）
 
 ***
-## 【Introduction of Prediction Ticket（For Professional Sports）】
+## 【Introduction of Prediction Ticket（for professional sports game）】
 - This is a dApp of prediction tickets sales platform for club teams and players and audiences of professional sports.
   (For example, club team is like Manchester United Football Club in the Premier League of UK)
 - Club teams of professional sports can drive engagement of audiences and increase ticket sales by using Prediction Ticket.
@@ -11,15 +11,16 @@
 
 
 ## 【How prediction ticket work?】 
-1. For example, if audiences buy a prediction ticket of 30DAI, 5DAI of them come as the voting right of prediction of MVP player of today's game.
-  (※ It mean when audiences buy a prediction ticket of 30DAI, 5DAI of them is staked and pooled automatically via SmartContract)
-  (※ 1 voting right per 1 ticket)
+For example,
+1. if audiences buy a prediction ticket of 30DAI, 5DAI of them come as the voting right of prediction of MVP player of today's game.   
+    - It mean when audiences buy a prediction ticket of 30DAI, 5DAI of them is staked and pooled automatically via SmartContract.
+    - 1 voting right per 1 ticket.
 
 2. Before today's game start, audiences predict MVP player of today's game and select them and submit them.
 
 3. After today's game end, audiences who prediction was successful (who is called winner) and players who was choosen as MVP can get reward from staked pool.
-  (※ Player who is the most collected voting become MVP of today's game)
-  (※ Reward amount is that divide total pooled amount by numbers of winners plus MVP player）
+    - Player who is the most collected voting become MVP of today's game.
+    - Reward amount is that divide total pooled amount by numbers of winners plus MVP player.
 
 
 &nbsp;
