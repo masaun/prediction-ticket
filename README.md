@@ -1,7 +1,7 @@
-# Prediction Ticket（For Professional Sports）
+# Prediction Ticket（for professional sports game）
 
 ***
-## 【Introduction of Prediction Ticket（For Professional Sports）】
+## 【Introduction of Prediction Ticket（for professional sports game）】
 - This is a dApp of prediction tickets sales platform for club teams and players and audiences of professional sports.
   (For example, club team is like Manchester United Football Club in the Premier League of UK)
 - Club teams of professional sports can drive engagement of audiences and increase ticket sales by using Prediction Ticket.
