@@ -1,0 +1,42 @@
+// Original: https://github.com/aave/aave-protocol/blob/master/contracts/flashloan/base/FlashLoanReceiverBase.sol
+
+pragma solidity ^0.5.0;
+
+import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+
+// AAVE
+import "./aave/ILendingPoolAddressesProvider.sol";
+import "./aave/ILendingPool.sol";
+import "./aave/EthAddressLib.sol";
+
+contract StakingByAToken {
+
+    using SafeERC20 for IERC20;
+    using SafeMath for uint256;
+
+    /// Input variables
+    address daiAddress = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
+    uint256 amount = 100 * 1e18;
+    uint16 referral = 0;
+
+    /// Retrieve LendingPool address
+    ILendingPoolAddressesProvider public provider;
+    ILendingPool public lendingPool;
+
+    constructor() public {
+        // Contract Address on Rosten
+        address _LendingPoolAddressesProvider = 0x1c8756FD2B28e9426CDBDcC7E3c4d64fa9A54728;  
+
+        provider = ILendingPoolAddressesProvider(_LendingPoolAddressesProvider);
+        lendingPool = ILendingPool(provider.getLendingPool());
+    }
+
+
+    /// Deposit method call
+    function depositToLendingPool() public returns (bool) {
+        lendingPool.deposit(daiAddress, amount, referral);        
+    }
+
+}
