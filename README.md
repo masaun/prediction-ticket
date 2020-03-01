@@ -11,7 +11,8 @@
 
 
 ## 【How prediction ticket work?】 
-1. For example, if audiences buy a prediction ticket of 30DAI, 5DAI of them come as the voting right of prediction of MVP player of today's game.
+For example,
+1. if audiences buy a prediction ticket of 30DAI, 5DAI of them come as the voting right of prediction of MVP player of today's game.
   (※ It mean when audiences buy a prediction ticket of 30DAI, 5DAI of them is staked and pooled automatically via SmartContract)
   (※ 1 voting right per 1 ticket)
 
