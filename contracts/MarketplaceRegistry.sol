@@ -116,6 +116,8 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
         // #2 ClubTeam staking instead of audience
         erc20.transferFrom(_clubTeam, poolOfFund, _stakingPrice);
 
+        stakingByAToken.depositToLendingPool();        
+
         // #3 Audience predict MVP player
         predictPlayerOfMVP(_gameId, _player);
     }
