@@ -11,7 +11,7 @@ import "./storage/CfStorage.sol";
 import "./storage/CfConstants.sol";
 
 import "./NftTicket.sol";
-
+import "./StakingByAToken.sol";
 
 
 /***
@@ -24,6 +24,7 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
     IERC721 public erc721;
 
     NftTicket public nftTicket;
+    StakingByAToken public stakingByAToken;
 
     // @dev - Global id
     uint256 ticketId;
@@ -44,8 +45,9 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
     address[] playersOfMVP;
 
 
-    constructor(address _nftTicket) public {
+    constructor(address _nftTicket, address _stakingByAToken) public {
         nftTicket = NftTicket(_nftTicket);
+        stakingByAToken = StakingByAToken(_stakingByAToken);
 
         _ticketPrice = 30;  // Total Ticket Price is 30
         _stakingPrice = 5;  // Staking Price for voting
