@@ -12,7 +12,7 @@ import "./storage/CfConstants.sol";
 
 import "./NftTicket.sol";
 import "./StakingByAToken.sol";
-import "./sendRewardForWinners.sol";
+import "./SendRewardForWinners.sol";
 
 
 
@@ -51,7 +51,7 @@ contract MarketplaceRegistry is Ownable, CfStorage, CfConstants {
     constructor(address _nftTicket, address _stakingByAToken, address _sendRewardForWinners) public {
         nftTicket = NftTicket(_nftTicket);
         stakingByAToken = StakingByAToken(_stakingByAToken);
-        sendRewardForWinners = SendRewardForWinnerAndPlayer(_sendRewardForWinners);
+        sendRewardForWinners = SendRewardForWinners(_sendRewardForWinners);
 
         _ticketPrice = 30;  // Total Ticket Price is 30
         _stakingPrice = 5;  // Staking Price for voting
