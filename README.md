@@ -13,14 +13,14 @@
 ## 【How prediction ticket work?】 
 For example,
 1. if audiences buy a prediction ticket of 30DAI, 5DAI of them come as the voting right of prediction of MVP player of today's game.   
-    - It mean when audiences buy a prediction ticket of 30DAI, 5DAI of them is staked and pooled automatically via SmartContract)  
-    - 1 voting right per 1 ticket)  
+    - It mean when audiences buy a prediction ticket of 30DAI, 5DAI of them is staked and pooled automatically via SmartContract.
+    - 1 voting right per 1 ticket.
 
 2. Before today's game start, audiences predict MVP player of today's game and select them and submit them.
 
 3. After today's game end, audiences who prediction was successful (who is called winner) and players who was choosen as MVP can get reward from staked pool.
-    - Player who is the most collected voting become MVP of today's game)  
-    - Reward amount is that divide total pooled amount by numbers of winners plus MVP player）  
+    - Player who is the most collected voting become MVP of today's game.
+    - Reward amount is that divide total pooled amount by numbers of winners plus MVP player.
 
 
 &nbsp;
